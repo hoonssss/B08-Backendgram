@@ -68,14 +68,6 @@ public class JwtUtil {
         return false;
     }
 
-//	public boolean validateToken(String token) {//KEY 값으로 암호화한 값인지 검증
-//		try {
-//			Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token); //key 값을 token에 넣어주면 된다고한다.
-//			return true; // true를 하는이유는 parseClaimsJws를 사용시 에러에 한 처리를 해준다.
-//
-//		}
-//	}
-
 
     public Claims getUserInfoFromToken(String token) {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
@@ -85,7 +77,7 @@ public class JwtUtil {
         Date date = new Date();
 
         // 토큰 만료시간 60분
-        long TOKEN_TIME = 60 * 60 * 1000;
+        long TOKEN_TIME = 60 * 1000;
         return BEARER_PREFIX +
                 Jwts.builder()
                         .setSubject(username)
