@@ -1,5 +1,6 @@
 package com.sparta.backendgram.newsfeed;
 
+import com.sparta.backendgram.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

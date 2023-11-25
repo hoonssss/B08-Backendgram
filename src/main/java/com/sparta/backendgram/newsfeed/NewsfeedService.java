@@ -1,5 +1,6 @@
 package com.sparta.backendgram.newsfeed;
 
+import com.sparta.backendgram.user.User;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

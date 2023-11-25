@@ -1,5 +1,7 @@
 package com.sparta.backendgram.newsfeed;
 
+import com.sparta.backendgram.user.CommonResponseDto;
+import com.sparta.backendgram.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
