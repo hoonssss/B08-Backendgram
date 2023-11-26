@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.RejectedExecutionException;
 
 @RequestMapping("/api/newsfeed")
@@ -27,13 +29,13 @@ public class NewsfeedController {
     }
 
     @GetMapping("/gets")
-    public ResponseEntity<Page<NewsfeedResponseDTO>> getNewsFeeds(
-            @RequestParam("page") int page,
-            @RequestParam("size") int size,
-            @RequestParam("sortBy") String sortBy,
-            @RequestParam("isAsc") boolean isAsc) {
-        Page<NewsfeedResponseDTO> newsfeed = newsfeedService.getNewsFeeds(page - 1, size, sortBy, isAsc);
-        return ResponseEntity.ok().body(newsfeed);
+    public ResponseEntity<List<NewsfeedResponseDTO>> getAllNewsFeeds(){
+        try {
+            List<NewsfeedResponseDTO> responseDTO = newsfeedService.getAllNewsFeed();
+            return ResponseEntity.ok().body(responseDTO);
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     //READ

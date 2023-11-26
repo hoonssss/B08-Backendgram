@@ -9,7 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.RejectedExecutionException;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,13 +35,13 @@ public class NewsfeedService {
     }
 
     //JH
-    public Page<NewsfeedResponseDTO> getNewsFeeds(int page, int size, String sortBy, boolean isAsc) {
-        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
-        Sort sort = Sort.by(direction,sortBy);
-        Pageable pageable = PageRequest.of(page,size,sort);
+    public List<NewsfeedResponseDTO> getAllNewsFeed() {
+        List<Newsfeed> newsfeed = newsfeedRepository.findAll();
 
-        Page<Newsfeed> newsFeeds = newsfeedRepository.findAll(pageable);
-        return newsFeeds.map(NewsfeedResponseDTO::new);
+        return newsfeed.stream()
+                .map(
+                        NewsfeedResponseDTO::new
+                ).collect(Collectors.toList());
     }
 
     //UPDATE
@@ -75,4 +77,5 @@ public class NewsfeedService {
         }
         return Newsfeed;
     }
+
 }
