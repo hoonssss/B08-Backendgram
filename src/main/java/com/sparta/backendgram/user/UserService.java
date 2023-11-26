@@ -1,5 +1,6 @@
 package com.sparta.backendgram.user;
 
+import com.sparta.backendgram.profile.ProfileResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,13 @@ public class UserService {
         if(!passwordEncoder.matches(password, user.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
+    }
+    public ProfileResponseDto getProfile(Long userId) {
+        User targetUser = existId(userId);
+        return ProfileResponseDto.of(targetUser);
+    }
+    private User existId(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new NullPointerException("프로필이 존재하지 않습니다."));
     }
 }

@@ -1,13 +1,10 @@
 package com.sparta.backendgram.user;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Getter
 @Entity
@@ -24,8 +21,20 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    private String content;
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public User(String username, String password, String content) {
+        this.username = username;
+        this.password = password;
+        this.content = content;
     }
 }
