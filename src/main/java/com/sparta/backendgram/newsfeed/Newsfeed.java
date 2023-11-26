@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -27,6 +29,9 @@ public class Newsfeed {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToMany
+    private List<User> likes = new ArrayList<>();
 
     public Newsfeed(NewsfeedRequestDTO dto) {
         this.title = dto.getTitle();

@@ -72,4 +72,16 @@ public class NewsfeedController {
             return ResponseEntity.badRequest().body(new CommonResponseDto(ex.getMessage(), HttpStatus.BAD_REQUEST.value()));
         }
     }
+
+    @PostMapping("/{userfeedId}/like")
+    public ResponseEntity<NewsfeedResponseDTO> likeNewsFeed(@PathVariable Long userfeedId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        NewsfeedResponseDTO newsfeedResponseDTO = newsfeedService.likeNewsFeed(userfeedId,userDetails.getUser());
+        return ResponseEntity.ok().body(newsfeedResponseDTO);
+    }
+
+    @PostMapping("/{userfeedId}/unlike")
+    public ResponseEntity<NewsfeedResponseDTO> unlikeNewsFeed(@PathVariable Long userfeedId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        NewsfeedResponseDTO newsfeedResponseDTO = newsfeedService.unlikeNewsFeed(userfeedId,userDetails.getUser());
+        return ResponseEntity.ok().body(newsfeedResponseDTO);
+    }
 }

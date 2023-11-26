@@ -71,7 +71,6 @@ public class ProfileService {
 
     public void updateProfileImage(Long userId, MultipartFile profileImage) {
         User user = getUser(userId);
-
         Profile profile = getProfile(user);
 
         String imageName = saveProfileImage(profileImage);
@@ -88,7 +87,7 @@ public class ProfileService {
             Files.copy(profileImage.getInputStream(), Paths.get(profileImageDirectory, imageName),
                     StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            throw new RuntimeException("실패", e);
+            throw new RuntimeException("Image 실패", e);
         }
 
         return imageName;
@@ -96,7 +95,7 @@ public class ProfileService {
 
     private User getUser(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("실"));
+                .orElseThrow(() -> new UsernameNotFoundException("ID 조회 실패"));
         return user;
     }
 
