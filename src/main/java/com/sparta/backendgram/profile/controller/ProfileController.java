@@ -1,6 +1,8 @@
 package com.sparta.backendgram.profile.controller;
 
 
+import com.sparta.backendgram.profile.dto.PasswordUpdateRequestDto;
+import com.sparta.backendgram.profile.dto.ProfileRequestDto;
 import com.sparta.backendgram.profile.dto.ProfileResponseDto;
 import com.sparta.backendgram.profile.service.ProfileService;
 import com.sparta.backendgram.user.UserDetailsImpl;
@@ -22,29 +24,31 @@ public class ProfileController {
     public ResponseEntity<ProfileResponseDto> getProfile(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         try {
             Long userId = userDetails.getUser().getId();
-            ProfileResponseDto profileRequestDto = profileService.getProfileByUserId(userId);
-            return ResponseEntity.ok(profileRequestDto);
+            ProfileResponseDto profileResponseDto = profileService.getProfileByUserId(userId);
+            return ResponseEntity.ok(profileResponseDto);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @PostMapping("/create/introduction")
-    public ResponseEntity<String> createIntroduction(@AuthenticationPrincipal UserDetailsImpl userDetails,@RequestParam String introduction) {
+    public ResponseEntity<String> createIntroduction(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody ProfileRequestDto profileRequestDto) {
         try {
             Long userId = userDetails.getUser().getId();
-            profileService.createProfile(userId, introduction);
-            return ResponseEntity.ok("Updated introduction successfully");
+            profileService.createProfile(userId, profileRequestDto);
+            return ResponseEntity.ok("성공");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @PutMapping("/update/password")
-    public ResponseEntity<String> updatePassword(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestParam String newPassword) {
+    public ResponseEntity<String> updatePassword(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody PasswordUpdateRequestDto passwordUpdateRequest) {
         try {
             Long userId = userDetails.getUser().getId();
-            profileService.updatePassword(userId, newPassword);
+            String currentPassword = passwordUpdateRequest.getCurrentPassword();
+            String newPassword = passwordUpdateRequest.getNewPassword();
+            profileService.updatePassword(userId, currentPassword, newPassword);
             return ResponseEntity.ok("성공");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

@@ -18,9 +18,13 @@ public class Profile {
     @JoinColumn(name = "user_id", unique = true)
     private User user;
 
+    @Column
+    private String title;
+
     @Column(name = "profile_image")
     private String profileImage;
 
+    @Column
     private String introduction;
 
     public void setProfileImage(String imageName) {

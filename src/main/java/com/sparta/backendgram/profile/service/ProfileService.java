@@ -1,11 +1,13 @@
 package com.sparta.backendgram.profile.service;
 
+import com.sparta.backendgram.profile.dto.ProfileRequestDto;
 import com.sparta.backendgram.profile.dto.ProfileResponseDto;
 import com.sparta.backendgram.profile.entity.Profile;
 import com.sparta.backendgram.profile.repository.ProfileRepository;
 import com.sparta.backendgram.user.User;
 import com.sparta.backendgram.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,66 +27,77 @@ public class ProfileService {
     private final ProfileRepository profileRepository;
     private final PasswordEncoder passwordEncoder;
 
-    private final String profileImageDirectory = "your/profile/image/directory";
+    @Value("${profile.image.directory}")
+    private String profileImageDirectory;
 
     public ProfileResponseDto getProfileByUserId(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("유저 오류"));
+        User user = getUser(userId);
 
         Profile profile = user.getProfile();
         if (profile == null) {
             return new ProfileResponseDto();
         }
 
-        // 이미지 URL 생성
         String profileImageURL = profile.getProfileImage() != null ?
-                ProfileResponseDto.createWithImageURL(user.getId(), profile.getIntroduction(), profile.getProfileImage()).getProfileImageURL() :
+                ProfileResponseDto.createWithImageURL(user.getId(), profile.getTitle(), profile.getIntroduction(), profile.getProfileImage()).getProfileImageURL() :
                 null;
 
-        return new ProfileResponseDto(user.getId(), profile.getIntroduction(), profileImageURL);
+        return new ProfileResponseDto(user.getId(), profile.getTitle(), profile.getIntroduction(), profileImageURL);
     }
 
-    public void createProfile(Long userId, String introduction) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("유저 오류"));
-
+    public void createProfile(Long userId, ProfileRequestDto profileRequestDto) {
+        User user = getUser(userId);
         Profile profile = getProfile(user);
-        profile.setIntroduction(introduction);
 
+        profile.setTitle(profileRequestDto.getTitle());
+        profile.setIntroduction(profileRequestDto.getIntroduction());
+
+        profileRepository.save(profile);
         userRepository.save(user);
     }
 
-    public void updatePassword(Long userId, String newPassword) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("유저 오류"));
+    public void updatePassword(Long userId, String currentPassword, String newPassword) {
+        User user = getUser(userId);
+
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+            System.out.println("현재 비밀번호 : " + currentPassword);
+            System.out.println("저장된 비밀번호 : " + user.getPassword());
+            throw new RuntimeException("암호 오류");
+        }
 
         user.setPassword(passwordEncoder.encode(newPassword));
-
         userRepository.save(user);
     }
 
-
     public void updateProfileImage(Long userId, MultipartFile profileImage) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("유저 오류"));
+        User user = getUser(userId);
 
         Profile profile = getProfile(user);
 
         String imageName = saveProfileImage(profileImage);
         profile.setProfileImage(imageName);
 
+        profileRepository.save(profile);
         userRepository.save(user);
     }
 
+    //디렉터리에 저장
     private String saveProfileImage(MultipartFile profileImage) {
         String imageName = UUID.randomUUID().toString() + "_" + profileImage.getOriginalFilename();
         try {
             Files.copy(profileImage.getInputStream(), Paths.get(profileImageDirectory, imageName),
                     StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            throw new RuntimeException("프로필 이미지 저장 실패", e);
+            throw new RuntimeException("실패", e);
         }
+
         return imageName;
+    }
+
+    private User getUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("실"));
+        return user;
     }
 
     private static Profile getProfile(User user) {
