@@ -1,6 +1,10 @@
 package com.sparta.backendgram.newsfeed;
 
 import com.sparta.backendgram.user.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +30,16 @@ public class NewsfeedService {
     public NewsfeedResponseDTO getNewsfeedDTO(Long newsfeedId) {
         Newsfeed newsfeed = getNewsfeed(newsfeedId);
         return new NewsfeedResponseDTO(newsfeed);
+    }
+
+    //JH
+    public Page<NewsfeedResponseDTO> getNewsFeeds(int page, int size, String sortBy, boolean isAsc) {
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction,sortBy);
+        Pageable pageable = PageRequest.of(page,size,sort);
+
+        Page<Newsfeed> newsFeeds = newsfeedRepository.findAll(pageable);
+        return newsFeeds.map(NewsfeedResponseDTO::new);
     }
 
     //UPDATE
@@ -61,5 +75,4 @@ public class NewsfeedService {
         }
         return Newsfeed;
     }
-
 }

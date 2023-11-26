@@ -3,6 +3,7 @@ package com.sparta.backendgram.newsfeed;
 import com.sparta.backendgram.user.CommonResponseDto;
 import com.sparta.backendgram.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,6 +24,16 @@ public class NewsfeedController {
         NewsfeedResponseDTO responseDTO = newsfeedService.createNewsfeed(newsfeedRequestDTO, userDetails.getUser());
 
         return ResponseEntity.status(201).body(responseDTO);
+    }
+
+    @GetMapping("/gets")
+    public ResponseEntity<Page<NewsfeedResponseDTO>> getNewsFeeds(
+            @RequestParam("page") int page,
+            @RequestParam("size") int size,
+            @RequestParam("sortBy") String sortBy,
+            @RequestParam("isAsc") boolean isAsc) {
+        Page<NewsfeedResponseDTO> newsfeed = newsfeedService.getNewsFeeds(page - 1, size, sortBy, isAsc);
+        return ResponseEntity.ok().body(newsfeed);
     }
 
     //READ
