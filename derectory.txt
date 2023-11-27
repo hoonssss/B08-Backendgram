@@ -1,0 +1,159 @@
+.
+├── HELP.md
+├── README.md
+├── backendgram
+│   ├── README.md
+│   ├── backendgram
+│   ├── build.gradle
+│   ├── gradle
+│   │   └── wrapper
+│   │       ├── gradle-wrapper.jar
+│   │       └── gradle-wrapper.properties
+│   ├── gradlew
+│   ├── gradlew.bat
+│   ├── settings.gradle
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── sparta
+│       │   │           └── backendgram
+│       │   │               └── BackendgramApplication.java
+│       │   └── resources
+│       │       └── application.properties
+│       └── test
+│           └── java
+│               └── com
+│                   └── sparta
+│                       └── backendgram
+│                           └── BackendgramApplicationTests.java
+├── build
+│   ├── classes
+│   │   └── java
+│   │       └── main
+│   │           └── com
+│   │               └── sparta
+│   │                   └── backendgram
+│   │                       ├── BackendgramApplication.class
+│   │                       ├── RedirectController.class
+│   │                       ├── configuration
+│   │                       │   └── WebSecurityConfig.class
+│   │                       ├── jwt
+│   │                       │   ├── JwtAuthorizationFilter.class
+│   │                       │   └── JwtUtil.class
+│   │                       ├── newsfeed
+│   │                       │   ├── Newsfeed.class
+│   │                       │   ├── NewsfeedController.class
+│   │                       │   ├── NewsfeedRepository.class
+│   │                       │   ├── NewsfeedRequestDTO.class
+│   │                       │   ├── NewsfeedResponseDTO.class
+│   │                       │   └── NewsfeedService.class
+│   │                       ├── profile
+│   │                       │   ├── controller
+│   │                       │   │   └── ProfileController.class
+│   │                       │   ├── dto
+│   │                       │   │   └── ProfileResponseDto.class
+│   │                       │   ├── entity
+│   │                       │   │   └── Profile.class
+│   │                       │   ├── repository
+│   │                       │   │   └── ProfileRepository.class
+│   │                       │   └── service
+│   │                       │       └── ProfileService.class
+│   │                       └── user
+│   │                           ├── CommonResponseDto.class
+│   │                           ├── User.class
+│   │                           ├── UserController.class
+│   │                           ├── UserDTO.class
+│   │                           ├── UserDetailsImpl.class
+│   │                           ├── UserDetailsService.class
+│   │                           ├── UserRepository.class
+│   │                           ├── UserRequestDto.class
+│   │                           └── UserService.class
+│   ├── generated
+│   │   └── sources
+│   │       ├── annotationProcessor
+│   │       │   └── java
+│   │       │       └── main
+│   │       └── headers
+│   │           └── java
+│   │               └── main
+│   ├── resources
+│   │   └── main
+│   │       ├── application.properties
+│   │       ├── static
+│   │       │   └── scripts.js
+│   │       └── templates
+│   │           └── index.html
+│   └── tmp
+│       └── compileJava
+│           ├── compileTransaction
+│           │   ├── backup-dir
+│           │   └── stash-dir
+│           └── previous-compilation-data.bin
+├── build.gradle
+├── derectory.txt
+├── directory.txt
+├── gradle
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── gradlew
+├── gradlew.bat
+├── settings.gradle
+└── src
+    ├── main
+    │   ├── java
+    │   │   └── com
+    │   │       └── sparta
+    │   │           └── backendgram
+    │   │               ├── BackendgramApplication.java
+    │   │               ├── configuration
+    │   │               │   └── WebSecurityConfig.java
+    │   │               ├── jwt
+    │   │               │   ├── JwtAuthorizationFilter.java
+    │   │               │   └── JwtUtil.java
+    │   │               ├── newsfeed
+    │   │               │   ├── Newsfeed.java
+    │   │               │   ├── NewsfeedController.java
+    │   │               │   ├── NewsfeedRepository.java
+    │   │               │   ├── NewsfeedRequestDTO.java
+    │   │               │   ├── NewsfeedResponseDTO.java
+    │   │               │   └── NewsfeedService.java
+    │   │               ├── profile
+    │   │               │   ├── controller
+    │   │               │   │   └── ProfileController.java
+    │   │               │   ├── dto
+    │   │               │   │   └── ProfileResponseDto.java
+    │   │               │   ├── entity
+    │   │               │   │   └── Profile.java
+    │   │               │   ├── repository
+    │   │               │   │   └── ProfileRepository.java
+    │   │               │   └── service
+    │   │               │       └── ProfileService.java
+    │   │               └── user
+    │   │                   ├── CommonResponseDto.java
+    │   │                   ├── User.java
+    │   │                   ├── UserController.java
+    │   │                   ├── UserDTO.java
+    │   │                   ├── UserDetailsImpl.java
+    │   │                   ├── UserDetailsService.java
+    │   │                   ├── UserRepository.java
+    │   │                   ├── UserRequestDto.java
+    │   │                   └── UserService.java
+    │   └── resources
+    │       ├── application.properties
+    │       ├── static
+    │       │   └── scripts.js
+    │       └── templates
+    │           └── index.html
+    └── test
+        └── java
+            └── com
+                ├── example
+                │   └── b08backendgram
+                │       └── B08backendgramApplicationTests.java
+                └── sparta
+                    └── backendgram
+                        └── BackendgramApplicationTests.java
+
+79 directories, 78 files
