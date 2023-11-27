@@ -28,6 +28,76 @@ API
 
 https://documenter.getpostman.com/view/30871154/2s9YeBcsdG
 
+디렉토리 구조 파악
+```
+├── HELP.md
+├── README.md
+├── backendgram
+├── build
+│   ├── classes
+│   │   └── java
+│   │       └── main
+│   │           └── com
+│   │               └── sparta
+│   │                   └── backendgram
+│   │                       ├── BackendgramApplication.class
+│   │                       ├── RedirectController.class
+│   │                       ├── configuration
+│   │                       │   └── WebSecurityConfig.class
+│   │                       ├── jwt
+│   │                       │   ├── JwtAuthorizationFilter.class
+│   │                       │   └── JwtUtil.class
+│   │                       ├── newsfeed
+│   │                       │   ├── Newsfeed.class
+│   │                       │   ├── NewsfeedController.class
+│   │                       │   ├── NewsfeedRepository.class
+│   │                       │   ├── NewsfeedRequestDTO.class
+│   │                       │   ├── NewsfeedResponseDTO.class
+│   │                       │   └── NewsfeedService.class
+│   │                       ├── profile
+│   │                       │   ├── controller
+│   │                       │   │   └── ProfileController.class
+│   │                       │   ├── dto
+│   │                       │   │   └── ProfileResponseDto.class
+│   │                       │   ├── entity
+│   │                       │   │   └── Profile.class
+│   │                       │   ├── repository
+│   │                       │   │   └── ProfileRepository.class
+│   │                       │   └── service
+│   │                       │       └── ProfileService.class
+│   │                       └── user
+│   │                           ├── CommonResponseDto.class
+│   │                           ├── User.class
+│   │                           ├── UserController.class
+│   │                           ├── UserDTO.class
+│   │                           ├── UserDetailsImpl.class
+│   │                           ├── UserDetailsService.class
+│   │                           ├── UserRepository.class
+│   │                           ├── UserRequestDto.class
+│   │                           └── UserService.class
+│   ├── generated
+│   │   └── sources
+│   │       ├── annotationProcessor
+│   │       │   └── java
+│   │       │       └── main
+│   │       └── headers
+│   │           └── java
+│   │               └── main
+│   ├── resources
+│   │   └── main
+│   │       ├── application.properties
+│   │       ├── static
+│   │       │   └── scripts.js
+│   │       └── templates
+│   │           └── index.html
+│   └── tmp
+│       └── compileJava
+│           ├── compileTransaction
+│           │   ├── backup-dir
+│           │   └── stash-dir
+│           └── previous-compilation-data.bin
+```
+
 
 ```
 KPT 회고록
