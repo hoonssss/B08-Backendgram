@@ -77,7 +77,7 @@ public class JwtUtil {
         Date date = new Date();
 
         // 토큰 만료시간 60분
-        long TOKEN_TIME = 60 * 1000;
+        long TOKEN_TIME = 60 * 60 * 1000;
         return BEARER_PREFIX +
                 Jwts.builder()
                         .setSubject(username)
