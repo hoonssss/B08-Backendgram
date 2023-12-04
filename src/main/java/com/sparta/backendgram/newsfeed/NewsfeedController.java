@@ -17,6 +17,7 @@ import java.util.concurrent.RejectedExecutionException;
 @RestController
 @RequiredArgsConstructor
 public class NewsfeedController {
+
     private final NewsfeedService newsfeedService;
 
     //CREATAE

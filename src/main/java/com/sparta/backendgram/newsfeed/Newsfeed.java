@@ -4,6 +4,7 @@ import com.sparta.backendgram.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Getter
 @Entity
+@Setter
 @NoArgsConstructor
 public class Newsfeed {
     @Id

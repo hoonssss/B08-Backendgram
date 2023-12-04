@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.stream.Collectors;
@@ -35,7 +36,7 @@ public class NewsfeedService {
         return new NewsfeedResponseDTO(newsfeed);
     }
 
-    //JH
+
     public List<NewsfeedResponseDTO> getAllNewsFeed() {
         List<Newsfeed> newsfeed = newsfeedRepository.findAll();
 
@@ -53,7 +54,9 @@ public class NewsfeedService {
         newsfeed.setTitle(newsfeedRequestDTO.getTitle());
         newsfeed.setContent(newsfeedRequestDTO.getContent());
 
-        return new NewsfeedResponseDTO(newsfeed);
+        Newsfeed updatedNewsfeed = newsfeedRepository.save(newsfeed);
+
+        return new NewsfeedResponseDTO(updatedNewsfeed);
     }
 
     //DELETE
@@ -61,7 +64,11 @@ public class NewsfeedService {
     public void deleteNewsfeed(Long newsfeedId, User user) {
         Newsfeed newsfeed = getUserNewsfeed(newsfeedId, user);
 
-        newsfeedRepository.delete(newsfeed);
+        if (newsfeed != null){
+            newsfeedRepository.deleteById(newsfeedId);
+        }else{
+            throw new IllegalArgumentException("delete 오류 발생");
+        }
     }
 
     //like
@@ -98,12 +105,18 @@ public class NewsfeedService {
     }
 
     public Newsfeed getUserNewsfeed(Long NewsfeedId, User user) {
-        Newsfeed Newsfeed = getNewsfeed(NewsfeedId);
-
-        if (!user.getId().equals(Newsfeed.getUser().getId())) {
+        Newsfeed newsfeed = getNewsfeed(NewsfeedId);
+        if(newsfeed == null){
+            throw new IllegalArgumentException("존재하지 않는 뉴스피드 ID입니다");
+        }
+        User newsfeedUser = newsfeed.getUser();
+        if(newsfeedUser == null){
+            throw new IllegalArgumentException("작성자 정보가 없습니다.");
+        }
+        if (!user.getId().equals(newsfeed.getUser().getId())) {
             throw new RejectedExecutionException("작성자만 수정할 수 있습니다.");
         }
-        return Newsfeed;
+        return newsfeed;
     }
 
     private Newsfeed findById(Long userfeedId) {
